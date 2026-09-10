@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriGuard AI – Multimodal Agricultural Copilot & Disease Clinic</title>
+    <meta name="description" content="Next-generation Gemini & ChatGPT style agricultural AI assistant for multi-crop full-plant disease diagnosis, canopy biometrics, and agronomic decision support.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js 3D Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="theme-dark">
+
+    <div class="app-layout">
+        
+        <!-- Sidebar (ChatGPT / Gemini Style) -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-sparkle">✨</div>
+                    <div>
+                        <div class="brand-title">AgriGuard <span class="brand-gemini">AI</span></div>
+                        <div class="brand-sub">Agronomic Copilot</div>
+                    </div>
+                </div>
+                <button type="button" class="btn-icon sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle Sidebar" title="Collapse menu">
+                    ◀
+                </button>
+            </div>
+
+            <!-- New Chat / Scan Button -->
+            <div class="sidebar-action-box">
+                <button type="button" class="btn-new-chat" onclick="startNewChat()">
+                    <span style="font-size: 1.2rem;">➕</span>
+                    <span>New Plant Scan / Chat</span>
+                </button>
+            </div>
+
+            <!-- Main Navigation Links -->
+            <div class="sidebar-nav">
+                <div class="nav-section-title">WORKSPACE</div>
+                <button type="button" class="nav-item active" id="navChatBtn" onclick="switchView('chat')">
+                    <span class="nav-icon">💬</span>
+                    <span>AI Health Copilot</span>
+                </button>
+                <button type="button" class="nav-item" id="navKnowledgeBtn" onclick="switchView('knowledge')">
+                    <span class="nav-icon">📖</span>
+                    <span>Crop Knowledge Base</span>
+                    <span class="badge-count">15+</span>
+                </button>
+                <button type="button" class="nav-item" id="navJournalBtn" onclick="switchView('journal')">
+                    <span class="nav-icon">📊</span>
+                    <span>Scan Journal &amp; History</span>
+                </button>
+                <button type="button" class="nav-item" id="navSprayBtn" onclick="switchView('spray')">
+                    <span class="nav-icon">🌦️</span>
+                    <span>Spray Safety Window</span>
+                </button>
+                <button type="button" class="nav-item" id="navStatsBtn" onclick="switchView('stats')">
+                    <span class="nav-icon">📈</span>
+                    <span>Farm Health Analytics</span>
+                </button>
+            </div>
+
+            <!-- Recent Sessions Section -->
+            <div class="sidebar-history-container">
+                <div class="nav-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>RECENT DIAGNOSES</span>
+                    <span id="historyCountBadge" style="font-size: 0.7rem; color: var(--text-muted);">0 scans</span>
+                </div>
+                <div id="recentScansList" class="recent-scans-list">
+                    <div class="empty-history-notice">No past scans yet</div>
+                </div>
+            </div>
+
+            <!-- Sidebar Footer / User Profile -->
+            <div class="sidebar-footer">
+                <div id="userProfileCard" class="user-profile-pill" onclick="openModal('authModal')">
+                    <div class="user-avatar" id="userAvatar">👨‍🌾</div>
+                    <div class="user-info">
+                        <div class="user-name" id="userNameLabel">Guest Mode</div>
+                        <div class="user-role" id="userRoleLabel">Click to Sign In</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace Area -->
+        <main class="main-content">
+            
+            <!-- Topbar -->
+            <header class="topbar">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <button type="button" class="btn-icon mobile-menu-btn" onclick="toggleSidebar()" aria-label="Open Sidebar">
+                        ☰
+                    </button>
+                    <div class="model-badge">
+                        <span class="pulse-dot"></span>
+                        <strong>AgriGuard Ultra 2.5</strong>
+                        <span class="sub-pill">100% Java Native Vision</span>
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <button type="button" class="btn-topbar" onclick="openModal('guidanceModal')" title="View Good vs Bad plant photo guidelines">
+                        📸 Photo Guide
+                    </button>
+                    <button type="button" class="btn-topbar" onclick="toggleTheme()" id="themeToggleBtn" title="Switch dark/light theme">
+                        🌙
+                    </button>
+                </div>
+            </header>
+
+            <!-- VIEW 1: Chat & Diagnosis Workspace (Default) -->
+            <section id="viewChat" class="view-panel active">
+                
+                <!-- Chat Container -->
+                <div id="chatScrollArea" class="chat-scroll-area">
+                    
+                    <!-- Welcome Hero (shown when no messages) -->
+                    <div id="welcomeHero" class="welcome-hero">
+                        
+                        <!-- 3D Hologram Canvas Container -->
+                        <div class="canvas-3d-wrapper">
+                            <div id="threejsCanvasContainer" class="three-canvas"></div>
+                            <div class="hologram-glow"></div>
+                        </div>
+
+                        <div class="hero-badge">🌱 Intelligent Multi-Crop Health System</div>
+                        <h1 class="hero-heading">What plant can I diagnose for you today?</h1>
+                        <p class="hero-subtext">
+                            Upload or capture a whole-plant photo to identify fungal, bacterial, viral pathogens, nutrient chlorosis, and microclimate stress with clinical agronomic recovery plans.
+                        </p>
+
+                        <!-- Quick Demo / Suggestion Chips -->
+                        <div class="prompt-chips-grid">
+                            <button type="button" class="prompt-chip" onclick="loadSampleImage('tomato_blight')">
+                                <span class="chip-icon">🍅</span>
+                                <div>
+                                    <div class="chip-title">Tomato Early Blight</div>
+                                    <div class="chip-sub">Concentric leaf spot simulation</div>
+                                </div>
+                            </button>
+                            <button type="button" class="prompt-chip" onclick="loadSampleImage('nitrogen_yellow')">
+                                <span class="chip-icon">☀️</span>
+                                <div>
+                                    <div class="chip-title">Nitrogen Chlorosis</div>
+                                    <div class="chip-sub">Yellowing lower canopy deficit</div>
+                                </div>
+                            </button>
+                            <button type="button" class="prompt-chip" onclick="loadSampleImage('corn_blight')">
+                                <span class="chip-icon">🌽</span>
+                                <div>
+                                    <div class="chip-title">Corn Leaf Blight</div>
+                                    <div class="chip-sub">Cigar-shaped streak analysis</div>
+                                </div>
+                            </button>
+                            <button type="button" class="prompt-chip" onclick="askPresetQuestion('How do I prevent powdery mildew organically on roses and grapes?')">
+                                <span class="chip-icon">🛡️</span>
+                                <div>
+                                    <div class="chip-title">Organic Fungus Care</div>
+                                    <div class="chip-sub">Preventive bio-fungicides</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Message Feed (Dynamic) -->
+                    <div id="messageFeed" class="message-feed"></div>
+
+                    <!-- Scanning Radar Animation (Overlay during analysis) -->
+                    <div id="scanningRadar" class="scanning-radar-container" style="display: none;">
+                        <div class="radar-box">
+                            <div class="radar-scanline"></div>
+                            <div class="radar-rings"></div>
+                            <div class="radar-icon">🔬</div>
+                        </div>
+                        <h3 style="margin-top: 1rem; color: var(--primary);">Analyzing Canopy Biometrics...</h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted);">Decomposing Excess Green Index (ExG), Chlorosis, and Necrotic Lesions</p>
+                    </div>
+                </div>
+
+                <!-- Multimodal Prompt Bar (Fixed at bottom) -->
+                <div class="prompt-bar-container">
+                    
+                    <!-- Selected File Attachment Ribbon -->
+                    <div id="attachedFilePill" class="attachment-ribbon" style="display: none;">
+                        <img id="attachedThumb" src="" alt="Selected Plant" class="attachment-thumb">
+                        <div class="attachment-info">
+                            <div id="attachedFileName" class="attachment-name">plant_photo.jpg</div>
+                            <div class="attachment-status">Ready for AI Vision Analysis</div>
+                        </div>
+                        <button type="button" class="attachment-remove" onclick="removeAttachedImage()" title="Remove photo">×</button>
+                    </div>
+
+                    <!-- Optional Quick Metadata Bar -->
+                    <div class="quick-meta-bar">
+                        <select id="cropSelector" class="meta-select">
+                            <option value="">🌱 Auto-Detect Crop</option>
+                            <!-- Populated dynamically -->
+                        </select>
+                        <select id="envSelector" class="meta-select">
+                            <option value="Open Field">🌱 Open Field</option>
+                            <option value="Greenhouse">🏠 Greenhouse</option>
+                            <option value="Container / Pot">🪴 Container / Pot</option>
+                            <option value="Hydroponic">💧 Hydroponic</option>
+                            <option value="Orchard">🌳 Orchard</option>
+                        </select>
+                        <select id="stageSelector" class="meta-select">
+                            <option value="Vegetative">🌿 Vegetative Stage</option>
+                            <option value="Seedling">🌱 Seedling</option>
+                            <option value="Flowering">🌸 Flowering</option>
+                            <option value="Fruiting">🍅 Fruiting</option>
+                            <option value="Harvest">🌾 Harvest</option>
+                        </select>
+                    </div>
+
+                    <!-- Main Prompt Input Form -->
+                    <form class="prompt-form" onsubmit="handleUserSubmit(event)">
+                        <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="handleFileChange(event)">
+                        
+                        <!-- File Attachment Button -->
+                        <button type="button" class="btn-prompt-action" onclick="document.getElementById('fileInput').click()" title="Attach Plant Photo">
+                            📎
+                        </button>
+                        
+                        <!-- Live Camera Button -->
+                        <button type="button" class="btn-prompt-action" onclick="openWebcam()" title="Open Live Camera">
+                            📷
+                        </button>
+
+                        <!-- Prompt Input Area -->
+                        <textarea id="promptInput" class="prompt-input" rows="1" placeholder="Attach a plant photo or ask AgriGuard AI about crop health, blights, pests..." onkeydown="handlePromptKeydown(event)"></textarea>
+
+                        <!-- Submit Button -->
+                        <button type="submit" id="sendBtn" class="btn-send" title="Send diagnosis request">
+                            <span>➤</span>
+                        </button>
+                    </form>
+
+                    <div class="disclaimer-text">
+                        AgriGuard AI provides clinical decision support. Always cross-verify with local agricultural extension officers before applying synthetic pesticides.
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: Multi-Crop Knowledge Base -->
+            <section id="viewKnowledge" class="view-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>📖 Multi-Crop Knowledge Base &amp; Pathology Benchmarks</h2>
+                        <p style="color: var(--text-muted);">Explore disease symptom signatures, biological cures, and optimal care across 15+ agricultural crops.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button type="button" class="btn-filter active" onclick="filterKnowledge('ALL')">All Crops</button>
+                        <button type="button" class="btn-filter" onclick="filterKnowledge('SOLANACEAE')">Solanaceae</button>
+                        <button type="button" class="btn-filter" onclick="filterKnowledge('POACEAE')">Poaceae</button>
+                        <button type="button" class="btn-filter" onclick="filterKnowledge('ROSACEAE')">Rosaceae</button>
+                        <button type="button" class="btn-filter" onclick="filterKnowledge('ABIOTIC')">☀️ Abiotic Stresses</button>
+                    </div>
+                </div>
+
+                <!-- Instant Search Bar -->
+                <div style="margin-bottom: 1.25rem;">
+                    <input type="text" id="kbSearchInput" class="form-control" placeholder="🔍 Search crops, pathogens, symptoms, or treatments (e.g. Blight, Mildew, Potato, Rust)..." oninput="searchKnowledgeBase(this.value)">
+                </div>
+
+                <div id="cropsGrid" class="cards-grid"></div>
+            </section>
+
+            <!-- VIEW 3: Scan Journal & History -->
+            <section id="viewJournal" class="view-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>📊 Diagnosis Journal &amp; Treatment History</h2>
+                        <p style="color: var(--text-muted);">Historical repository of all plant health scans and treatment adherence records.</p>
+                    </div>
+                    <button type="button" class="btn btn-outline" onclick="exportJournalCSV()">
+                        📥 Export Journal to CSV
+                    </button>
+                </div>
+
+                <div class="table-container glass-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Crop</th>
+                                <th>Condition / Disease</th>
+                                <th>Health Status</th>
+                                <th>Severity</th>
+                                <th>Confidence</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading scan journal...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- VIEW 4: Microclimate Spray Safety Window -->
+            <section id="viewSpray" class="view-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>🌦️ Agronomic Spray Safety Window &amp; Microclimate Calculator</h2>
+                        <p style="color: var(--text-muted);">Simulate ambient weather variables before applying fungicides or biological sprays to prevent drift and washoff.</p>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="padding: 1.5rem; margin-top: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h3 style="font-size: 1.3rem;">Current Safety Rating:</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Adjust parameters below to evaluate spraying efficacy:</p>
+                        </div>
+                        <span id="standaloneSprayPill" class="spray-badge badge-safe" style="font-size: 1rem; padding: 0.5rem 1.25rem;">🟢 SAFE TO SPRAY</span>
+                    </div>
+
+                    <div class="spray-grid" style="margin-bottom: 1.5rem;">
+                        <div class="spray-input-box">
+                            <label for="calcTemp">🌡️ Ambient Temperature</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="calcTemp" value="22" min="5" max="45" oninput="updateStandaloneSpray()">
+                                <span>°C</span>
+                            </div>
+                        </div>
+                        <div class="spray-input-box">
+                            <label for="calcWind">💨 Wind Speed</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="calcWind" value="6" min="0" max="50" oninput="updateStandaloneSpray()">
+                                <span>km/h</span>
+                            </div>
+                        </div>
+                        <div class="spray-input-box">
+                            <label for="calcHumidity">💧 Relative Humidity</label>
+                            <div class="input-with-unit">
+                                <input type="number" id="calcHumidity" value="60" min="10" max="100" oninput="updateStandaloneSpray()">
+                                <span>%</span>
+                            </div>
+                        </div>
+                        <div class="spray-input-box">
+                            <label for="calcRain">🌧️ 6-Hour Rain Forecast</label>
+                            <select id="calcRain" onchange="updateStandaloneSpray()" class="meta-select" style="width: 100%;">
+                                <option value="none">0% - Clear / No Rain</option>
+                                <option value="low">20% - Trace Rain</option>
+                                <option value="medium">50% - Moderate Rain</option>
+                                <option value="high">85% - Imminent Heavy Rain</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="standaloneSprayAdvice" class="spray-advice-box">
+                        ✅ <strong>Optimal Spray Window:</strong> Gentle breeze (6 km/h) and moderate temperature (22°C) ensure optimal droplet coverage and minimal drift risk.
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: Farm Health Analytics -->
+            <section id="viewStats" class="view-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>📈 Farm Health Analytics &amp; Disease Distributions</h2>
+                        <p style="color: var(--text-muted);">Real-time aggregated health telemetry across all scanned crops.</p>
+                    </div>
+                </div>
+
+                <div class="metrics-grid" style="margin-top: 1rem; margin-bottom: 2rem;">
+                    <div class="metric-card glass-card">
+                        <div class="metric-icon" style="background: rgba(16, 185, 129, 0.15); color: #10B981;">🔍</div>
+                        <div>
+                            <div id="statTotalScans" class="metric-val">0</div>
+                            <div class="metric-label">Total Plant Scans</div>
+                        </div>
+                    </div>
+                    <div class="metric-card glass-card">
+                        <div class="metric-icon" style="background: rgba(59, 130, 246, 0.15); color: #3B82F6;">🌿</div>
+                        <div>
+                            <div id="statHealthRate" class="metric-val">85%</div>
+                            <div class="metric-label">Crop Health Rate</div>
+                        </div>
+                    </div>
+                    <div class="metric-card glass-card">
+                        <div class="metric-icon" style="background: rgba(239, 68, 68, 0.15); color: #EF4444;">🚨</div>
+                        <div>
+                            <div id="statDiseased" class="metric-val">0</div>
+                            <div class="metric-label">Active Disease Alerts</div>
+                        </div>
+                    </div>
+                    <div class="metric-card glass-card">
+                        <div class="metric-icon" style="background: rgba(245, 158, 11, 0.15); color: #F59E0B;">🌾</div>
+                        <div>
+                            <div id="statCropsMonitored" class="metric-val">15+</div>
+                            <div class="metric-label">Crops Monitored</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-split">
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <h3 style="margin-bottom: 1rem;">Severity Breakdown</h3>
+                        <div id="severityStatsList"></div>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <h3 style="margin-bottom: 1rem;">Crop Distribution</h3>
+                        <div id="cropStatsList"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ==================== MODALS ==================== -->
+
+    <!-- 1. Good vs Bad Photo Guidance Modal -->
+    <div id="guidanceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="guidanceTitle">
+        <div class="modal-dialog">
+            <button type="button" class="modal-close" onclick="closeModal('guidanceModal')">×</button>
+            <h3 id="guidanceTitle" style="font-size: 1.4rem; margin-bottom: 1rem;">📸 Plant Photography Guidelines</h3>
+            
+            <div class="guide-cards-grid">
+                <div class="guide-item good">
+                    <div class="guide-icon">✅</div>
+                    <div>
+                        <strong>Recommended (Whole Plant)</strong>
+                        <p>Capture the entire canopy, lower mature leaves, stems, and soil context for holistic pathogen detection.</p>
+                    </div>
+                </div>
+                <div class="guide-item bad">
+                    <div class="guide-icon">⚠️</div>
+                    <div>
+                        <strong>Avoid Blurry Single-Leaf Cutouts</strong>
+                        <p>Close-ups of isolated leaf tips miss root hypoxia, nitrogen chlorosis, and vascular wilting.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="closeModal('guidanceModal')">Got it!</button>
+        </div>
+    </div>
+
+    <!-- 2. Live Webcam Modal -->
+    <div id="webcamModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="webcamTitle">
+        <div class="modal-dialog" style="max-width: 620px; text-align: center;">
+            <button type="button" class="modal-close" onclick="closeWebcam()">×</button>
+            <h3 id="webcamTitle" style="margin-bottom: 1rem;">📸 Live Camera Capture</h3>
+            <div class="webcam-viewport">
+                <video id="webcamVideo" autoplay playsinline></video>
+                <div class="camera-target-crosshair"></div>
+            </div>
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+                <button type="button" class="btn btn-primary" onclick="captureWebcamPhoto()">📷 Capture Photo</button>
+                <button type="button" class="btn btn-outline" onclick="closeWebcam()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Auth Modal (Login / Register) -->
+    <div id="authModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="modal-dialog">
+            <button type="button" class="modal-close" onclick="closeModal('authModal')">×</button>
+            
+            <div class="auth-tabs-header">
+                <button type="button" id="tabLoginBtn" class="auth-tab-btn active" onclick="switchAuthTab('login')">Sign In</button>
+                <button type="button" id="tabRegBtn" class="auth-tab-btn" onclick="switchAuthTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginFormContainer">
+                <h3 id="authTitle" style="margin-bottom: 1rem;">Sign in to AgriGuard AI</h3>
+                <div id="loginError" class="auth-error"></div>
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginUsername">Username or Email</label>
+                        <input type="text" id="loginUsername" class="form-control" placeholder="farmer_john" required>
+                    </div>
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;">Sign In</button>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.75rem; text-align: center;">Demo account: <code>farmer_john</code> / <code>agri123</code></p>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="regFormContainer" style="display: none;">
+                <h3 style="margin-bottom: 1rem;">Create Farmer Account</h3>
+                <div id="regError" class="auth-error"></div>
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regFullName">Full Name</label>
+                        <input type="text" id="regFullName" class="form-control" placeholder="e.g. Dr. Maria Garcia">
+                    </div>
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" class="form-control" placeholder="mariag" required>
+                    </div>
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="maria@farm.org" required>
+                    </div>
+                    <div class="form-group" style="margin-top: 0.75rem;">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="Minimum 6 characters" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.25rem;">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Detailed Crop / Disease Modal -->
+    <div id="cropModal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-dialog" style="max-width: 650px;">
+            <button type="button" class="modal-close" onclick="closeModal('cropModal')">×</button>
+            <div id="cropModalContent"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="/js/app.js"></script>
+</body>
+</html>

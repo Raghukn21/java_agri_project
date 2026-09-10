@@ -1,0 +1,34 @@
+FROM openjdk:17-jdk-slim as builder
+
+WORKDIR /app
+
+# Copy Maven wrapper and pom.xml
+COPY backend/mvnw backend/mvnw.cmd backend/.mvn* ./mvn/
+COPY backend/pom.xml ./pom.xml
+
+# Build application (for Linux)
+RUN if [ -f ./mvn/mvnw ]; then chmod +x ./mvn/mvnw; fi
+
+# Copy source
+COPY backend/src ./src
+
+# Build
+RUN sh -c 'if [ -f ./mvn/mvnw ]; then ./mvn/mvnw clean package -DskipTests; else mvn clean package -DskipTests; fi'
+
+# Runtime stage
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# Create uploads directory
+RUN mkdir -p /app/uploads
+
+# Copy built jar
+COPY --from=builder /app/target/*.jar ./app.jar
+
+# Copy resources
+COPY backend/src/main/resources/ ./resources/
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]

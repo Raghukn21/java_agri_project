@@ -1,0 +1,284 @@
+{
+  "classes": {
+    "tomato_early_blight": {
+      "crop": "Tomato",
+      "display_name": "Early Blight (Tomato)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["bullseye", "concentric rings", "yellow halo", "lower leaf drop"]
+    },
+    "tomato_late_blight": {
+      "crop": "Tomato",
+      "display_name": "Late Blight (Tomato)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["water soaked", "greasy spots", "white mold underside", "stem rot"]
+    },
+    "tomato_yellow_leaf_curl": {
+      "crop": "Tomato",
+      "display_name": "Yellow Leaf Curl Virus",
+      "health_status": "DISEASED",
+      "category": "VIRAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["upward curling", "cupping", "stunting", "interveinal yellowing"]
+    },
+    "tomato_bacterial_spot": {
+      "crop": "Tomato",
+      "display_name": "Bacterial Spot (Tomato)",
+      "health_status": "DISEASED",
+      "category": "BACTERIAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["small dark spots", "halos", "fruit scabs", "defoliation"]
+    },
+    "tomato_healthy": {
+      "crop": "Tomato",
+      "display_name": "Healthy Tomato Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["deep green", "firm leaves", "vigorous growth", "no lesions"]
+    },
+    "potato_early_blight": {
+      "crop": "Potato",
+      "display_name": "Early Blight (Potato)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["target spots", "dry leaf lesions", "yellowing margins"]
+    },
+    "potato_late_blight": {
+      "crop": "Potato",
+      "display_name": "Late Blight (Potato)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["dark purplish lesions", "white mildew", "stem decay"]
+    },
+    "potato_healthy": {
+      "crop": "Potato",
+      "display_name": "Healthy Potato Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["rich green foliage", "upright vine", "vigorous canopy"]
+    },
+    "pepper_bacterial_spot": {
+      "crop": "Chili & Bell Pepper",
+      "display_name": "Bacterial Spot (Pepper)",
+      "health_status": "DISEASED",
+      "category": "BACTERIAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["water soaked spots", "leaf yellowing", "foliage drop"]
+    },
+    "pepper_anthracnose": {
+      "crop": "Chili & Bell Pepper",
+      "display_name": "Anthracnose (Pepper)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["sunken fruit lesions", "pinkish orange rings", "fruit rot"]
+    },
+    "pepper_healthy": {
+      "crop": "Chili & Bell Pepper",
+      "display_name": "Healthy Pepper Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["glossy green", "crisp leaves", "firm stems"]
+    },
+    "cotton_bacterial_blight": {
+      "crop": "Cotton",
+      "display_name": "Bacterial Blight / Angular Leaf Spot",
+      "health_status": "DISEASED",
+      "category": "BACTERIAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["angular spots", "vein bounded", "blackarm stem lesions"]
+    },
+    "cotton_bollworm_damage": {
+      "crop": "Cotton",
+      "display_name": "Bollworm Pest Damage",
+      "health_status": "DISEASED",
+      "category": "PEST",
+      "severity": "HIGH",
+      "symptom_keywords": ["chewed squares", "boll entry holes", "frass", "flared squares"]
+    },
+    "cotton_healthy": {
+      "crop": "Cotton",
+      "display_name": "Healthy Cotton Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["erect growth", "healthy squares", "uniform green canopy"]
+    },
+    "corn_northern_leaf_blight": {
+      "crop": "Corn / Maize",
+      "display_name": "Northern Corn Leaf Blight",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["cigar shaped lesions", "long tan streaks", "parallel to veins"]
+    },
+    "corn_common_rust": {
+      "crop": "Corn / Maize",
+      "display_name": "Common Rust (Corn)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["cinnamon pustules", "brick red powdery spots", "both leaf surfaces"]
+    },
+    "corn_healthy": {
+      "crop": "Corn / Maize",
+      "display_name": "Healthy Corn Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["broad green leaves", "thick stalk", "clean tassel and ear"]
+    },
+    "apple_scab": {
+      "crop": "Apple",
+      "display_name": "Apple Scab",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["olive green spots", "velvety lesions", "corky fruit scabs"]
+    },
+    "apple_black_rot": {
+      "crop": "Apple",
+      "display_name": "Black Rot / Frogeye Spot",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["frogeye leaf spots", "branch cankers", "mummified fruit"]
+    },
+    "apple_healthy": {
+      "crop": "Apple",
+      "display_name": "Healthy Apple Foliage",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["glossy foliage", "clean shoot growth", "blemish free fruit"]
+    },
+    "grape_black_rot": {
+      "crop": "Grape",
+      "display_name": "Grape Black Rot",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["reddish brown leaf spots", "black shriveled mummies"]
+    },
+    "grape_powdery_mildew": {
+      "crop": "Grape",
+      "display_name": "Powdery Mildew (Grape)",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["white powdery coating", "ash gray dust", "berry scarring"]
+    },
+    "grape_healthy": {
+      "crop": "Grape",
+      "display_name": "Healthy Grapevine",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["vibrant green leaves", "uniform berry cluster", "clean shoots"]
+    },
+    "rice_blast": {
+      "crop": "Rice",
+      "display_name": "Rice Blast",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "HIGH",
+      "symptom_keywords": ["spindle shaped lesions", "diamond spots", "neck rot", "whiteheads"]
+    },
+    "rice_healthy": {
+      "crop": "Rice",
+      "display_name": "Healthy Rice Crop",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["erect green tillers", "clean panicles", "uniform stand"]
+    },
+    "wheat_leaf_rust": {
+      "crop": "Wheat",
+      "display_name": "Wheat Leaf Rust",
+      "health_status": "DISEASED",
+      "category": "FUNGAL",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["orange brown pustules", "powdery spore dust", "flag leaf chlorosis"]
+    },
+    "wheat_healthy": {
+      "crop": "Wheat",
+      "display_name": "Healthy Wheat Plant",
+      "health_status": "HEALTHY",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["green flag leaves", "strong tillering", "plump grain heads"]
+    },
+    "nitrogen_deficiency_general": {
+      "crop": "General Plant",
+      "display_name": "Nitrogen Deficiency (Abiotic)",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["pale green", "uniform yellowing lower leaves", "stunted growth"]
+    },
+    "potassium_deficiency_general": {
+      "crop": "General Plant",
+      "display_name": "Potassium Deficiency (Abiotic)",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["marginal scorch", "brown burnt leaf edges", "curling outer leaves"]
+    },
+    "iron_chlorosis_general": {
+      "crop": "General Plant",
+      "display_name": "Iron Chlorosis / Interveinal Yellowing",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["interveinal chlorosis", "green veins yellow leaf", "youngest leaves affected"]
+    },
+    "water_stress_drought_general": {
+      "crop": "General Plant",
+      "display_name": "Drought / Underwatering Stress",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "HIGH",
+      "symptom_keywords": ["inward leaf curling", "limp wilting canopy", "crispy dry leaf tips"]
+    },
+    "waterlogging_stress_general": {
+      "crop": "General Plant",
+      "display_name": "Waterlogging / Root Hypoxia Stress",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "HIGH",
+      "symptom_keywords": ["yellow soggy lower leaves", "soft wilting", "root rot odor"]
+    },
+    "heat_sunscald_stress_general": {
+      "crop": "General Plant",
+      "display_name": "Heat Stress / Sunscald",
+      "health_status": "STRESSED",
+      "category": "ABIOTIC",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["papery bleached patches", "white sunburned areas", "crispy leaf edges"]
+    },
+    "pest_infestation_general": {
+      "crop": "General Plant",
+      "display_name": "Sucking Pest Infestation (Aphids/Mites)",
+      "health_status": "DISEASED",
+      "category": "PEST",
+      "severity": "MEDIUM",
+      "symptom_keywords": ["yellow stippling", "fine webbing", "crinkled leaves", "sticky honeydew"]
+    },
+    "unknown_stress_general": {
+      "crop": "General Plant",
+      "display_name": "Unidentified Stress / General Advisory",
+      "health_status": "STRESSED",
+      "category": "UNKNOWN",
+      "severity": "LOW",
+      "symptom_keywords": ["ambiguous chlorosis", "general lack of vigor", "mixed symptoms"]
+    }
+  }
+}

@@ -1,0 +1,33 @@
+server:
+  port: ${PORT:8088}
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: agriguard-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:default}
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 30MB
+      enabled: true
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3306/agriguard_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+agriguard:
+  upload-dir: ${UPLOAD_DIR:uploads/}
+  jwt-secret: ${JWT_SECRET:AgriGuardAIPlantDetectionSuperSecretKeyForJWTAuth2026SecureKeyWithMin256BitsLength}
+  jwt-expiration-ms: 86400000 # 24 hours
+
